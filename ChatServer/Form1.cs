@@ -7,14 +7,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net;
+using System.Net.Sockets;
 
 namespace ChatServer
 {
     public partial class Form1 : Form
     {
+        TcpListener tcpListener;
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private async Task server_Click(object sender, EventArgs e)
+        {
+            tcpListener=new TcpListener(IPAddress.Parse("127.0.0.1"),5000);
+            tcpListener.Start();
+            MessageBox.Show("Server started");
+            TcpClient client = await tcpListener.AcceptTcpClientAsync();
+            MessageBox.Show("Client connected!");
         }
     }
 }

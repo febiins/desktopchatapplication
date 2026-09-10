@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\S3projects\\DotNetProject\\desktopchatapplication\\ChatServer\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{804E6BD1-FF02-40AF-A02E-B745A37312B0}|ChatServer.csproj|d:\\s3projects\\dotnetproject\\desktopchatapplication\\chatserver\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{804E6BD1-FF02-40AF-A02E-B745A37312B0}|ChatServer.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{804E6BD1-FF02-40AF-A02E-B745A37312B0}|ChatServer.csproj|d:\\s3projects\\dotnetproject\\desktopchatapplication\\chatserver\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{804E6BD1-FF02-40AF-A02E-B745A37312B0}|ChatServer.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
@@ -19,6 +23,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "D:\\S3projects\\DotNetProject\\desktopchatapplication\\ChatServer\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "D:\\S3projects\\DotNetProject\\desktopchatapplication\\ChatServer\\Form1.cs",
+              "RelativeToolTip": "Form1.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAABwAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-10T09:39:20.184Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "D:\\S3projects\\DotNetProject\\desktopchatapplication\\ChatServer\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
