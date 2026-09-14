@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,7 +10,13 @@ namespace ChatServer
     public partial class Form1 : Form
     {
         TcpListener tcpListener;
-            
+
+        TcpClient client;
+        NetworkStream stream;
+
+        StreamReader reader;
+        StreamWriter writer;
+
         public Form1()
         {
             InitializeComponent();
@@ -25,25 +24,91 @@ namespace ChatServer
 
         private async void server_Click(object sender, EventArgs e)
         {
-            tcpListener=new TcpListener(IPAddress.Parse("127.0.0.1"),5000);
-            tcpListener.Start();
-            MessageBox.Show("Server started");
-            TcpClient client = await tcpListener.AcceptTcpClientAsync();
-            MessageBox.Show("Client connected!");
-            NetworkStream stream = client.GetStream();
-            StreamReader reader = new StreamReader(stream);
-            StreamWriter writer = new StreamWriter(stream);
-
-            while (true)
+            try
             {
-                string msg = await reader.ReadLineAsync();
-                MessageBox.Show(msg);
+                tcpListener = new TcpListener(
+                    IPAddress.Loopback,
+                    5000
+                );
 
-                await writer.WriteLineAsync(msg);
-                await writer.FlushAsync();
+                tcpListener.Start();
+
+                rtbChat.AppendText("Server started...\r\n");
+                rtbChat.AppendText("Waiting for client...\r\n");
+
+                client = await tcpListener.AcceptTcpClientAsync();
+
+                rtbChat.AppendText("Client connected!\r\n");
+
+                stream = client.GetStream();
+
+                reader = new StreamReader(stream);
+                writer = new StreamWriter(stream);
+
+                _ = ReceiveMessages();
             }
-            
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
+        private async Task ReceiveMessages()
+        {
+            try
+            {
+                while (true)
+                {
+                    string message = await reader.ReadLineAsync();
+
+                    if (message == null)
+                    {
+                        rtbChat.AppendText("Client disconnected.\r\n");
+                        break;
+                    }
+
+                    rtbChat.AppendText(
+                        "Client: " + message + Environment.NewLine
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                rtbChat.AppendText(
+                    "Connection error: " + ex.Message + Environment.NewLine
+                );
+            }
+        }
+
+        private async void btnSend_Click(object sender, EventArgs e)
+        {
+            if (writer == null)
+            {
+                MessageBox.Show("Client is not connected.");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtMessage.Text))
+                return;
+
+            try
+            {
+                string message = txtMessage.Text;
+
+                await writer.WriteLineAsync(message);
+                await writer.FlushAsync();
+
+                rtbChat.AppendText(
+                    "Server: " + message + Environment.NewLine
+                );
+
+                txtMessage.Clear();
+                txtMessage.Focus();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to send message: " + ex.Message);
+            }
         }
     }
 }
